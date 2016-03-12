@@ -55,10 +55,15 @@ $(document).ready(function() {
   });
 
   $('#Next').on("click", function() {
-    page = pageEnd;
-    if (pageEnd == numLastPage) pageEnd += lastPage;
-    else pageEnd += 5;
-    getfromjson('JSON/data3.json', page, pageEnd);
+    if (pageEnd + 5 >= numLastPage + lastPage) {
+      page = numLastPage;
+      pageEnd = page + lastPage;
+    }
+    else {
+      page = pageEnd;
+      pageEnd += 5;
+    }
+    getfromjson('JSON/data3.json');
   });
 
 	$('#Prvs').on("click", function(){
