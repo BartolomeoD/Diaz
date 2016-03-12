@@ -6,6 +6,8 @@ function include(url) {
 include ("jquery-2.2.1.min.js");
 
 $(document).ready(function() {
+  function installheight2(){$(".content").css("height", "calc(100% - 50px)");}
+  function installheight3(){$(".content").css("height", "100%");}
   $(".bottom").hide();
   var lastPage;
   var numLastPage;
@@ -30,6 +32,7 @@ $(document).ready(function() {
   $('#b1').on("click", function() {
     $(".bottom").hide();
     $(".content").html("<div> HElloWorld! </div>");
+	installheight3();
   });
 
   $('#b2').on("click", function() {
@@ -37,6 +40,7 @@ $(document).ready(function() {
     page = 0;
     pageEnd = 4;
     getfromjson('JSON/data.json');
+	installheight3();
   });
 
   $('#b3').on("click", function() {
@@ -44,6 +48,7 @@ $(document).ready(function() {
     page = 0;
     pageEnd = 18;
     getfromjson('JSON/data3.json');
+	installheight3();
   });
 
   $('#b4').on("click", function() {
@@ -51,7 +56,8 @@ $(document).ready(function() {
     console.log(page, pageEnd);
     page = 0;
     pageEnd = 5;
-    getfromjson('JSON/data3.json')
+    getfromjson('JSON/data3.json');
+	installheight2();
   });
 
   $('#Next').on("click", function() {
