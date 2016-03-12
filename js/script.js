@@ -25,8 +25,7 @@ $(document).ready(function() {
   $('#d3').hide();
   $('#d4').hide();
   $('.bottom').hide();
-  var page;
-  var pageEnd;
+
   $('#b1').on("click", function() {
   $('.bottom').hide();
     $(".content").html("<div> HElloWorld! </div>");
@@ -61,22 +60,19 @@ $(document).ready(function() {
 
   $('#b4').on("click", function() {
 	$.getJSON('JSON/data3.json', processData);
-    function processData(data) {
-		var permis = true;
-		page = 0 ;
-		pageEnd = 5;
-		var empty='';
-		var numbPage
-      for (numbPage = page; numbPage < pageEnd; numbPage++) {
-        empty+='<p>'+data[numbPage].id+'<br>'+data[numbPage].name+'</p>';
-      };
+    function processData(data) {		
+		var empty='';		
+		$(".bottom").attr("pagenum",String(1));		
+		pageOpen=Number($(".bottom").attr("pagenum"))*5-5;
+		for(var numData=pageOpen; numData<pageOpen+5;numData++)
+		{
+                console.log(numData);
+				empty+='<p>'+data[numData].id+'<br>'+data[numData].name+'</p>';
+		        }
       $('.bottom').show();
-      $(".content").html(empty);
-
-
-		    
+      $(".content").html(empty); 
 	
-};
+}
 
 	
 	installheight(this.id,true);
@@ -104,7 +100,6 @@ $(document).ready(function() {
 		        console.log(numData);
 				empty+='<p>'+data[numData].id+'<br>'+data[numData].name+'</p>';
 		}
-		        permis=false;
 				$(".content").html(empty);}	
 	  }
 	  }
