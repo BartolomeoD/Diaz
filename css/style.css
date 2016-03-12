@@ -1,25 +1,74 @@
-.sidebar, .content {
-    padding: 10px; /* Поля */
+html{
+	height:100%
+}
+body{
+	height:100%;
+	    margin: 0;
+    padding: 0;}
+/*.sidebar,*/ .content{
+    
+	
+	width:85%;
+	text-align:right;
+	padding-left:10px;
+	padding-right:10px;
+	
     border: solid 1px #000; /* Параметры рамки */
     background: #8080FF; /* Цвет фона */
     box-shadow: inset 0 0 6px;
     text-align: center;
    }
 .layout {
-    margin: 15px 0; /* Отступы сверху и снизу */
+	height:100%;
+
     margin-left: 20%;
     overflow: hidden; /* Отменяем действие float */
     min-width: 800; /* Минимальная ширина */
     max-width: 60%; /* Максимальная ширина */
    }
 .sidebar { /* Навигация по сайту */
+    border: solid 1px #000; /* Параметры рамки */
     width: 15%; /* Ширина меню */
+	height:100%;
     float: left; /* Состыковка с другим слоем по горизонтали */
+		padding-left: 10px; /* Поля */
+		padding-right: 10px; 
+    border: solid 1px #000; /* Параметры рамки */
+    background: #8080FF; /* Цвет фона */
+    box-shadow: inset 0 0 6px;
+    text-align: center;
    }
 .sidebar ul {
     list-style: none; /* Убираем маркеры */
     padding: 0; /* Убираем отступы */
    }
 .content { /* Основное содержание страницы */
-    margin-left: 35%px; /* Отступ слева */
+   /* height:70%*/
+   
+
+   height: 100% ;
+	margin-left: 35%px; /* Отступ слева */
    }
+.bottom{
+	height: 50px;
+	border: solid 1px #000; /* Параметры рамки */
+    background: #8080FF; /* Цвет фона */
+    box-shadow: inset 0 0 6px;
+	width:85%;
+	padding-left:10px;
+	padding-right:10px;
+	text-align: center;	
+	 padding-bottom: 0;
+}
+
+#first, #prvs, #next, #last {
+  display: block;
+  width: 25%;
+}
+.bottom ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  padding-bottom: 0;
+    display: flex;
+}
