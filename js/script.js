@@ -3,155 +3,82 @@ function include(url) {
   script.src = url;
   document.getElementsByTagName('head')[0].appendChild(script);
 }
-include ("js/jquery-2.2.1.min.js");
+include ("jquery-2.2.1.min.js");
 
 $(document).ready(function() {
-  var firstheight;
-  var pageOpen=1;
-  
-  $(".content").height(function(i,val){
-	   firstheight=val;
-       return val;
-    });
-  function installheight(id,znach){
-	  console.log(id);
-	   $(".content").height(function(i,val){
-		
-       if(firstheight == val && znach==true){return val-50;}if(firstheight > val && znach==false){return val+50;}}
-    );}
-	
-  $('#d1').hide();
-  $('#d2').hide();
-  $('#d3').hide();
-  $('#d4').hide();
-  $('.bottom').hide();
-
+  $(".bottom").hide();
+  var lastPage;
+  var numLastPage;
+  var page = 0;
+  var pageEnd = 0;
+  var jsonstring;
+  var getfromjson = function(jsonurl, startid = page, lastid = pageEnd) {
+    $.getJSON(jsonurl, function(data) {
+      jsonstring = '<table>';
+      for (var num = startid; num < lastid; num++) {
+        jsonstring+='<tr>'+'<th>'+data[num].id+'</th>'+'<th>'+data[num].name+'</th>'+'</tr>';
+      };
+      jsonstring += '</table>';
+      $(".content").html(jsonstring);
+    })
+  };
+  $.getJSON('JSON/data3.json', processData);
+  function processData(data) {
+  lastPage = data.length % 5;
+  numLastPage = data.length - lastPage;
+  }
   $('#b1').on("click", function() {
-  $('.bottom').hide();
+    $(".bottom").hide();
     $(".content").html("<div> HElloWorld! </div>");
-	installheight(this.id,false);
   });
 
   $('#b2').on("click", function() {
-    $('.bottom').hide();
-    $.getJSON('JSON/data.json', processData);
-    function processData(data) {
-      var empty='';
-      for (var num = 0; num <= 3; num++) {
-        empty+='<p>'+data[num].mytitle+'<br>'+data[num].myarticle+'</p>';
-      }
-      $(".content").html(empty);
-	  installheight(this.id,false);
-    }
+    $(".bottom").hide();
+    page = 0;
+    pageEnd = 4;
+    getfromjson('JSON/data.json');
   });
 
   $('#b3').on("click", function() {
-    $('.bottom').hide();
-    $.getJSON('JSON/data2.json', processData);
-    function processData(data) {
-      var bla='';
-      $.each(data,function(mainobj, obj){
-        bla+='<p>'+obj.mytitle+'<br>'+obj.myarticle+'</p>';
-      });
-      $(".content").html(bla);
-    }
-	installheight(this.id,false);
+    $(".bottom").hide();
+    page = 0;
+    pageEnd = 18;
+    getfromjson('JSON/data3.json');
   });
 
   $('#b4').on("click", function() {
-	$.getJSON('JSON/data3.json', processData);
-    function processData(data) {		
-		var empty='';		
-		$(".bottom").attr("pagenum",String(1));		
-		pageOpen=Number($(".bottom").attr("pagenum"))*5-5;
-		for(var numData=pageOpen; numData<pageOpen+5;numData++)
-		{
-                console.log(numData);
-				empty+='<p>'+data[numData].id+'<br>'+data[numData].name+'</p>';
-		        }
-      $('.bottom').show();
-      $(".content").html(empty); 
-	
-}
-
-	
-	installheight(this.id,true);
+    $(".bottom").show();
+    console.log(page, pageEnd);
+    page = 0;
+    pageEnd = 5;
+    getfromjson('JSON/data3.json')
   });
-  	  $('#next').on("click", function() {
-		  $.getJSON('JSON/data3.json', processData);
-    function processData(data) {
-		
-		if(pageOpen+5<=data.length){$(".bottom").attr("pagenum",String(Number($(".bottom").attr("pagenum"))+1));}
-		
-		pageOpen=Number($(".bottom").attr("pagenum"))*5-5;
-		console.log(pageOpen);
-		console.log(data.length);
-		var empty='';
-		if(pageOpen+5<=data.length){
-		for(var numData=pageOpen; numData<pageOpen+5;numData++)
-		{
-                console.log(numData);
-				empty+='<p>'+data[numData].id+'<br>'+data[numData].name+'</p>';
-		        }
-				$(".content").html(empty);}		
-		if(pageOpen+5>data.length){ 
-		for(var numData=pageOpen; numData<data.length;numData++)
-		{
-		        console.log(numData);
-				empty+='<p>'+data[numData].id+'<br>'+data[numData].name+'</p>';
-		}
-				$(".content").html(empty);}	
-	  }
-	  }
-    );
-		  $('#prvs').on("click", function() {
-			  $.getJSON('JSON/data3.json', processData);
-    function processData(data) {
-		
-		if(pageOpen*5-5>0)$(".bottom").attr("pagenum",String(Number($(".bottom").attr("pagenum"))-1));		
-		pageOpen=Number($(".bottom").attr("pagenum"))*5-5;
-		console.log(pageOpen);
-		console.log(data.length);
-		var empty='';		
-		for(var numData=pageOpen; numData<pageOpen+5;numData++)
-		{
-                console.log(numData);
-				empty+='<p>'+data[numData].id+'<br>'+data[numData].name+'</p>';
-		        }
-				$(".content").html(empty);			
-		  }
-		  }
-    );
-	 $('#first').on("click", function() {
-		  $.getJSON('JSON/data3.json', processData);
-    function processData(data) {
-		$(".bottom").attr("pagenum",String(1));		
-		pageOpen=Number($(".bottom").attr("pagenum"))*5-5;
-		var empty='';
-		for(var numData=pageOpen; numData<pageOpen+5;numData++)
-		{
-                console.log(numData);
-				empty+='<p>'+data[numData].id+'<br>'+data[numData].name+'</p>';
-		        }
-				$(".content").html(empty);	
-	}
-	}
-	);
-	$('#last').on("click", function() {
-		  $.getJSON('JSON/data3.json', processData);
-    function processData(data) {
-		$(".bottom").attr("pagenum",String((data.length-data.length%5)/5+1));		
-		pageOpen=Number($(".bottom").attr("pagenum"))*5-5;
-		var empty='';
-        if(pageOpen+5>data.length){ 
-		for(var numData=pageOpen; numData<data.length;numData++)
-		{
-		        console.log(numData);
-				empty+='<p>'+data[numData].id+'<br>'+data[numData].name+'</p>';
-		}
-		        
-				$(".content").html(empty);}	
-	}
-	}
-	);
+
+  $('#Next').on("click", function() {
+    page = pageEnd;
+    if (pageEnd == numLastPage) pageEnd += lastPage;
+    else pageEnd += 5;
+    getfromjson('JSON/data3.json', page, pageEnd);
+  });
+
+	$('#Prvs').on("click", function(){
+		if (page > 4){
+      if (page == numLastPage) pageEnd -= lastPage;
+      else pageEnd = page;
+      page -= 5;
+      getfromjson('JSON/data3.json');
+	   }
+  });
+
+  $('#First').on("click", function() {
+    page = 0;
+    pageEnd = 5;
+    getfromjson('JSON/data3.json');
+  });
+
+  $('#Last').on("click", function() {
+    page = numLastPage;
+    pageEnd = page + lastPage;
+    getfromjson('JSON/data3.json');
+  })
 });
